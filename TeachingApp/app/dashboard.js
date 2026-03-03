@@ -2,16 +2,15 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Image, ImageBackground } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
+const backgroundImage = require("../assets/images/background.png");
 
-const backgroundImage = require("./assets/images/background.png");
-
-export default function App() {
+export default function dashboard() {
   return (
     <ImageBackground source={backgroundImage} style={styles.background}>
       
       {/* BANNER ARRIBA */}
       <Image
-        source={require("./assets/images/banner principal.png")}
+        source={require("../assets/images/banner principal.png")}
         style={styles.banner}
         resizeMode="cover"
       />
@@ -40,7 +39,7 @@ export default function App() {
 
       {/* FOOTER ABAJO */}
       <Image
-        source={require("./assets/images/footerImage.png")}
+        source={require("../assets/images/footerImage.png")}
         style={styles.footer}
         resizeMode="contain"
       />
@@ -53,7 +52,7 @@ export default function App() {
 function Card({ number, title, colors, textColor }) {
   return (
     <LinearGradient colors={colors} style={styles.card}>
-      <Image source={require("./assets/images/Recurso 1.png")} style={{ width: 80, height: 80, marginBottom: 20, position:"absolute" }} />
+      <Image source={require("../assets/images/Recurso 1.png")} style={{ width: 80, height: 80, marginBottom: 20, position:"absolute" }} />
       <Text style={[styles.number, { color: textColor }]}>{number}</Text>
       <Text style={[styles.title, { color: textColor }]}>{title}</Text>
     </LinearGradient>
