@@ -1,10 +1,20 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Image, ImageBackground } from "react-native";
+import { StyleSheet, Text, View, Image, ImageBackground,TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { Link,useRouter } from "expo-router";
+const recursos = {
+  "1": require("../assets/images/Recurso 1.png"),
+  "2": require("../assets/images/Recurso 2.png"),
+  "3": require("../assets/images/canciones.png"),
+};
 
 const backgroundImage = require("../assets/images/background.png");
 
 export default function dashboard() {
+    const router = useRouter();
+
+
+
   return (
     <ImageBackground source={backgroundImage} style={styles.background}>
       
@@ -12,50 +22,79 @@ export default function dashboard() {
       <Image
         source={require("../assets/images/banner principal.png")}
         style={styles.banner}
-        resizeMode="cover"
+        resizeMode="contain"
       />
 
       {/* CONTENIDO CENTRAL */}
       <View style={styles.cardsContainer}>
-        <Card
+       
+       <Card
           number="1"
           title="Aprende"
           colors={["#FF0000", "#FF6F4B"]}
-          textColor="#aa2808"
+          textColor="#ffffff"
+          recurso="1"
+          onPress={() => router.push("/aprende")}
         />
+   
         <Card
           number="2"
           title="Juegos"
           colors={["#AE00FF", "#8A00E6"]}
-          textColor="#53008a"
+          textColor="#ffffff"
+          recurso="2"
+          onPress={() => router.push("/aprende")}
         />
+
         <Card
           number="3"
           title="Canciones"
           colors={["#4858FF", "#2629E0"]}
-          textColor="#0f1b9b"
+          textColor="#ffffff"
+          recurso="3"
+          onPress={() => router.push("/aprende")}
         />
       </View>
 
-      {/* FOOTER ABAJO */}
+
+
+      <StatusBar style="auto" />
+            {/* FOOTER ABAJO */}
       <Image
         source={require("../assets/images/footerImage.png")}
         style={styles.footer}
         resizeMode="contain"
       />
-
-      <StatusBar style="auto" />
     </ImageBackground>
   );
 }
 
-function Card({ number, title, colors, textColor }) {
+function Card({ number, title, colors, textColor,onPress, recurso }) {
   return (
-    <LinearGradient colors={colors} style={styles.card}>
-      <Image source={require("../assets/images/Recurso 1.png")} style={{ width: 80, height: 80, marginBottom: 20, position:"absolute" }} />
-      <Text style={[styles.number, { color: textColor }]}>{number}</Text>
-      <Text style={[styles.title, { color: textColor }]}>{title}</Text>
-    </LinearGradient>
+
+    <TouchableOpacity onPress={onPress} style={{ zIndex: 100 }}>
+      <LinearGradient colors={colors} style={styles.card}>
+  
+        {/* ROW 1 */}
+        <View style={styles.topRow}>
+          <Text style={[styles.number, { color: textColor }]}>
+            {number}
+          </Text>
+
+          <Image
+              source={recursos[recurso]}
+            style={styles.cardImage}
+            resizeMode="contain"
+          />
+        </View>
+
+        {/* ROW 2 */}
+        <Text style={[styles.title, { color: textColor }]}>
+          {title}
+        </Text>
+      </LinearGradient>
+    </TouchableOpacity>
+
   );
 }
 
@@ -67,7 +106,7 @@ const styles = StyleSheet.create({
 
   banner: {
     width: "100%",
-    height: 200,
+    height: 400,
   },
 
   cardsContainer: {
@@ -76,16 +115,35 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
 
+  topRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 15,
+  },
+    cardImage: {
+    width: 70,
+    height: 70,
+  },
   card: {
     borderRadius: 20,
-    padding: 20,
+    padding: 1,
+    marginBottom: 20,
+    display: "grid  ",
+    zIndex: 200,
+    
+  
     alignItems: "center",
-    border: "4px solid #fff",
-  },
+    border: "4",
+    borderColor: "#fff",
+    borderWidth: 4,
+  },  
 
   number: {
     fontSize: 40,
-    fontWeight: "bold",
+    fontWeight: "bold", 
+     
+    
   },
 
   title: {
@@ -96,5 +154,8 @@ const styles = StyleSheet.create({
   footer: {
     width: "100%",
     height: 200,
+    zIndex: 10
+    
+    
   },
 });

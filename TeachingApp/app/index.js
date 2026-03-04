@@ -6,13 +6,14 @@ import {
   TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
-  Platform, Image
+  Platform, Image,
 } from "react-native";
 
-import { Link } from "expo-router";
+import { Link,useRouter } from "expo-router";
 import { useState } from "react";
 
 export default function page() {
+      const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -30,7 +31,7 @@ export default function page() {
       >
         <Image source={require("../assets/images/sing 1.png")} style={{width:300, height:300}} resizeMode="contain" />
 
-        <Text style={styles.title}>Bienvenido</Text>
+        <Text style={styles.title}>Bienvenido a la app de enseñanza para niños</Text>
 
         <View style={styles.form}>
           <TextInput
@@ -51,17 +52,17 @@ export default function page() {
             secureTextEntry
           />
 
-          <TouchableOpacity style={styles.buttonLogin}>
-            <Link href={"/dashboard"}>
+          <TouchableOpacity style={styles.buttonLogin}           onPress={() => router.push("/dashboard")}>
+          
             <Text style={styles.buttonText}>Iniciar Sesión</Text>
-            </Link>
+     
           </TouchableOpacity>
 
 
-          <TouchableOpacity style={styles.buttonRegister}>
-  <Link href={"/register"}>
+          <TouchableOpacity style={styles.buttonRegister    }  onPress={() => router.push("/register")}>
+
             <Text style={styles.buttonText}>Registrarse</Text>
-               </Link>
+  
           </TouchableOpacity>
 
 
@@ -95,7 +96,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 32,
     fontWeight: "bold",
-    color: "white",
+    color: "#0031c3",
     textAlign: "center",
     marginBottom: 40,
   },

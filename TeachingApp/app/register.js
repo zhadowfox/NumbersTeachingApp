@@ -8,7 +8,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
+import {  useRouter  } from "expo-router";
 import { useState } from "react";
 
 export default function RegisterScreen() {
@@ -17,8 +17,10 @@ export default function RegisterScreen() {
   const [correo, setCorreo] = useState("");
   const [password, setPassword] = useState("");
 
+  const router = useRouter();
   const handleRegister = () => {
     console.log({ nombre, apellido, correo, password });
+    router.push("/registerKids");
   };
 
   return (
@@ -61,7 +63,9 @@ export default function RegisterScreen() {
           />
 
           <TouchableOpacity style={styles.button} onPress={handleRegister}>
-            <Text style={styles.buttonText}>Registrarse</Text>
+          
+              <Text style={styles.buttonText}>Registrarse</Text>
+ 
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
@@ -83,7 +87,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     fontWeight: "bold",
-    color: "white",
+    color: "black",
     textAlign: "center",
     marginBottom: 30,
   },

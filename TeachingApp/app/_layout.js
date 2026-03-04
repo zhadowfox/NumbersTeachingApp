@@ -1,5 +1,5 @@
 import { Slot } from "expo-router";
-import { ImageBackground, View, StyleSheet } from "react-native";
+import { ImageBackground,  StyleSheet } from "react-native";
 const backgroundImage = require("../assets/images/background.png");
 
 export default function Layout() {
@@ -18,7 +18,7 @@ export default function Layout() {
 const styles = StyleSheet.create({
   background: {
     flex: 1,
-    justifyContent: "space-between", // distribuye arriba-centro-abajo
+    justifyContent: "space-between",
   },
 
 })

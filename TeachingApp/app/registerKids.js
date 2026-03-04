@@ -8,16 +8,17 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
+import {  useRouter  } from "expo-router";
 import { useState } from "react";
 
 export default function RegisterChildScreen() {
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
   const [edad, setEdad] = useState("");
-
+const router = useRouter();
   const handleRegisterChild = () => {
     console.log({ nombre, apellido, edad });
+    router.push("/dashboard");
   };
 
   return (
@@ -52,7 +53,9 @@ export default function RegisterChildScreen() {
           />
 
           <TouchableOpacity style={styles.button} onPress={handleRegisterChild}>
-            <Text style={styles.buttonText}>Guardar</Text>
+        
+              <Text style={styles.buttonText}>Guardar</Text>
+      
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
