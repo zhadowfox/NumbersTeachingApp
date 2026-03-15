@@ -6,8 +6,9 @@ import {
   TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
-  Platform, Image,
+  Platform, Image, Alert
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { Link,useRouter } from "expo-router";
 import { useState } from "react";
@@ -17,10 +18,31 @@ export default function page() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
-    console.log("Email:", email);
-    console.log("Password:", password);
-  };
+const handleLogin = async () => {
+  try {
+    const data = await AsyncStorage.getItem("usuario");
+
+    if (!data) {
+      Alert.alert("Error", "No existe un usuario registrado");
+      return;
+    }
+
+    const usuario = JSON.parse(data);
+
+    if (
+  email.trim() === usuario.correo &&
+  password.trim() === usuario.password
+) {
+    router.replace("/seleccionarKid");
+    } else {
+      Alert.alert("Error", "Correo o contraseña incorrectos");
+    }
+
+  } catch (error) {
+    console.log(error);
+    Alert.alert("Error", "Ocurrió un problema al iniciar sesión");
+  }
+};
 
   return (
     <
@@ -52,7 +74,7 @@ export default function page() {
             secureTextEntry
           />
 
-          <TouchableOpacity style={styles.buttonLogin}           onPress={() => router.push("/dashboard")}>
+          <TouchableOpacity style={styles.buttonLogin}   onPress={handleLogin}>
           
             <Text style={styles.buttonText}>Iniciar Sesión</Text>
      

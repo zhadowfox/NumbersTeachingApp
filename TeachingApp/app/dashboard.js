@@ -2,6 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Image, ImageBackground,TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Link,useRouter } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const recursos = {
   "1": require("../assets/images/Recurso 1.png"),
   "2": require("../assets/images/Recurso 2.png"),
@@ -12,6 +13,14 @@ const backgroundImage = require("../assets/images/background.png");
 
 export default function dashboard() {
     const router = useRouter();
+    const obtenerHijo = async () => {
+  const data = await AsyncStorage.getItem("hijoActivo");
+
+  if (data) {
+    const hijo = JSON.parse(data);
+    console.log("Hijo activo:", hijo.nombre);
+  }
+};
 
 
 
@@ -43,7 +52,7 @@ export default function dashboard() {
           colors={["#AE00FF", "#8A00E6"]}
           textColor="#ffffff"
           recurso="2"
-          onPress={() => router.push("/aprende")}
+          onPress={() => router.push("/juegos")}
         />
 
         <Card
@@ -52,7 +61,7 @@ export default function dashboard() {
           colors={["#4858FF", "#2629E0"]}
           textColor="#ffffff"
           recurso="3"
-          onPress={() => router.push("/aprende")}
+          onPress={() => router.push("/historialKids")}
         />
       </View>
 

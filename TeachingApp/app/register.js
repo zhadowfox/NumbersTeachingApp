@@ -19,8 +19,15 @@ export default function RegisterScreen() {
 
   const router = useRouter();
   const handleRegister = () => {
-    console.log({ nombre, apellido, correo, password });
-    router.push("/registerKids");
+  router.push({
+    pathname: "/registerKids",
+    params: {
+      nombre,
+      apellido,
+      correo,
+      password
+    }
+  });
   };
 
   return (

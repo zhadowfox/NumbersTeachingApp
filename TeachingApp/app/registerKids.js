@@ -8,18 +8,70 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
-import {  useRouter  } from "expo-router";
+import {  useRouter, useLocalSearchParams  } from "expo-router";
 import { useState } from "react";
 
+
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 export default function RegisterChildScreen() {
-  const [nombre, setNombre] = useState("");
-  const [apellido, setApellido] = useState("");
-  const [edad, setEdad] = useState("");
+  const { nombre, apellido, correo, password } = useLocalSearchParams();
+const [nombreHijo, setNombreHijo] = useState("");
+const [apellidoHijo, setApellidoHijo] = useState("");
+const [edadHijo, setEdadHijo] = useState("");
+
+const [hijos, setHijos] = useState([]);
 const router = useRouter();
   const handleRegisterChild = () => {
     console.log({ nombre, apellido, edad });
     router.push("/dashboard");
   };
+
+
+
+const agregarOtro = () => {
+
+  const nuevoHijo = {
+    nombre: nombreHijo,
+    apellido: apellidoHijo,
+    edad: edadHijo
+  };
+
+  setHijos([...hijos, nuevoHijo]);
+
+  // limpiar formulario
+  setNombreHijo("");
+  setApellidoHijo("");
+  setEdadHijo("");
+};
+
+const finalizarRegistro = async () => {
+
+  const nuevoHijo = {
+    nombre: nombreHijo,
+    apellido: apellidoHijo,
+    edad: edadHijo
+  };
+
+  const todosLosHijos = [...hijos, nuevoHijo];
+
+  const usuario = {
+    nombre,
+    apellido,
+    correo,
+    password,
+    hijos: todosLosHijos
+  };
+
+  await AsyncStorage.setItem("usuario", JSON.stringify(usuario));
+
+  alert("Registro completado");
+
+  router.replace("/dashboard");
+};
+
+
 
   return (
     <>
@@ -33,28 +85,34 @@ const router = useRouter();
           <TextInput
             placeholder="Nombre"
             style={styles.input}
-            value={nombre}
-            onChangeText={setNombre}
+            value={nombreHijo}
+            onChangeText={setNombreHijo}
           />
 
           <TextInput
             placeholder="Apellido"
             style={styles.input}
-            value={apellido}
-            onChangeText={setApellido}
+            value={apellidoHijo}
+            onChangeText={setApellidoHijo}
           />
 
           <TextInput
             placeholder="Edad"
             style={styles.input}
-            value={edad}
-            onChangeText={setEdad}
+            value={edadHijo}
+            onChangeText={setEdadHijo}
             keyboardType="numeric"
           />
 
-          <TouchableOpacity style={styles.button} onPress={handleRegisterChild}>
+          <TouchableOpacity style={styles.button} onPress={agregarOtro}>
         
-              <Text style={styles.buttonText}>Guardar</Text>
+              <Text style={styles.buttonText}>Registrar otro hijo</Text>
+      
+          </TouchableOpacity>
+
+            <TouchableOpacity style={styles.buttonFinish} onPress={finalizarRegistro}>
+        
+              <Text style={styles.buttonText}>Finalizar</Text>
       
           </TouchableOpacity>
         </View>
@@ -96,6 +154,12 @@ const styles = StyleSheet.create({
   },
 
   button: {
+    backgroundColor: "#0033cc",
+    padding: 15,
+    borderRadius: 12,
+    alignItems: "center",
+  },
+    buttonFinish: {
     backgroundColor: "#00c334",
     padding: 15,
     borderRadius: 12,
